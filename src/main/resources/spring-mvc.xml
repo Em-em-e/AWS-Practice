@@ -36,6 +36,7 @@
      <mvc:resources mapping="/docs/**" location="/docs/" />
       <mvc:resources mapping="/dist/**" location="/dist/" />
        <mvc:resources mapping="/fonts/**" location="/fonts/" />
+     <mvc:resources mapping="/portal/**" location="/portal/" />
 
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
 		<property name="exceptionMappings">  

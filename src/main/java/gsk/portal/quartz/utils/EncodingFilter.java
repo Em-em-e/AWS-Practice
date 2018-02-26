@@ -5,14 +5,24 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import gsk.portal.quartz.dao.UserMapper;
  
 public class EncodingFilter implements Filter {
- 
+	
+	@Autowired
+	private UserMapper userMapper;
+	
       @Override
 	public void destroy() {
  
@@ -45,9 +55,36 @@ public class EncodingFilter implements Filter {
             // 自定义一个request对象：MyRequest，对服务器原来的requset进行增强，使用装饰设计模式
             // 要增强原来的request对象，必须先获取到原来的request对象
             MyRequest myRequest = new MyRequest(request);
- 
-            // 注意：放行的时候应该传入增强后的request对象
-            chain.doFilter(myRequest, response);
+            
+            //验证用户是否登陆portal====================================================================
+            String sessionId="";
+            String host=url.substring(0,url.indexOf(request.getRequestURI())+1);
+            Cookie[] cookies=request.getCookies();
+            if(cookies!=null&&cookies.length>0)
+            for(Cookie c:cookies) {//共享cookie
+            	if("SESSIONID".equals(c.getName())) {
+            		sessionId=c.getValue();
+            	}
+            }
+            ServletContext sc=request.getServletContext().getContext("/gsk-web");
+            Object ses=sc.getAttribute(sessionId);
+            if(ses!=null) {//已登陆
+//            	userMapper.superSelect("");
+            	HttpSession session=(HttpSession) ses;
+            	String username=(String) session.getAttribute("userLoginName");
+            	myRequest.setAttribute("userId", username);
+            	chain.doFilter(myRequest, response);
+            }else{//未登录
+            	String xReq = request.getHeader("x-requested-with");
+                if (xReq!=null&&!"".equals(xReq) && "XMLHttpRequest".equalsIgnoreCase(xReq)) {
+                    // 是ajax异步请求
+//                    response.getWriter().print("timeout");
+                	response.setHeader("sessionstatus","timeout");
+                    chain.doFilter(myRequest, response);
+                }else {
+                	response.sendRedirect(host+"web/static/errorpage/error-session-timeout.jsp");
+                }
+            }
       }
  
       @Override
