@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="warehouse.dao.PracticeMapper" >
+  <resultMap id="BaseResultMap" type="warehouse.model.Practice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="no" property="no" jdbcType="INTEGER" />
+    <result column="str" property="str" jdbcType="VARCHAR" />
+    <result column="ans" property="ans" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, no, str, ans, type
+  </sql>
+  <select id="queryPage" resultMap="BaseResultMap">  
+        select * from practice   
+        <where>  
+        	1=1
+        </where>
+        <if test="limit != null">
+	        limit #{offset},#{limit} 
+        </if>  
+    </select> 
+  <select id="count" resultType="java.lang.Integer">
+    	select count(*) from practice
+    	<where>  
+        	1=1
+            <!-- <if test="inOutDetail.productNo != null">  
+                and product_no=#{inOutDetail.productNo}
+            </if> --> 
+        </where>
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from practice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByNo" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from practice
+    where no = #{no,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from practice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="warehouse.model.Practice" >
+    insert into practice (id, no, str, 
+      ans, type)
+    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=INTEGER}, #{str,jdbcType=VARCHAR}, 
+      #{ans,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="warehouse.model.Practice" >
+    insert into practice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="str != null" >
+        str,
+      </if>
+      <if test="ans != null" >
+        ans,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=INTEGER},
+      </if>
+      <if test="str != null" >
+        #{str,jdbcType=VARCHAR},
+      </if>
+      <if test="ans != null" >
+        #{ans,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="warehouse.model.Practice" >
+    update practice
+    <set >
+      <if test="no != null" >
+        no = #{no,jdbcType=INTEGER},
+      </if>
+      <if test="str != null" >
+        str = #{str,jdbcType=VARCHAR},
+      </if>
+      <if test="ans != null" >
+        ans = #{ans,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="warehouse.model.Practice" >
+    update practice
+    set no = #{no,jdbcType=INTEGER},
+      str = #{str,jdbcType=VARCHAR},
+      ans = #{ans,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

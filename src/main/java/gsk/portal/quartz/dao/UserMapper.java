@@ -3,7 +3,7 @@ package gsk.portal.quartz.dao;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import datav.entity.User;
+import javax.xml.registry.infomodel.User;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);

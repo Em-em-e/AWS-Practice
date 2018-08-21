@@ -8,13 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 	<!-- 自动扫描且只扫描@Controller -->
-	<context:component-scan base-package="gsk.portal" use-default-filters="false">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-	</context:component-scan>
-	<context:component-scan base-package="datav" use-default-filters="false">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-	</context:component-scan>
-	<context:component-scan base-package="echarts" use-default-filters="false">
+	<context:component-scan base-package="warehouse" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
@@ -25,18 +19,17 @@
 	
 	<!-- 定义JSP文件的位置 -->  
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
-	<mvc:resources mapping="/css/**" location="/css/" /> 
+	<mvc:resources mapping="/bootstrap/**" location="/bootstrap/" /> 
     <mvc:resources mapping="/images/**" location="/images/" />
     <mvc:resources mapping="/js/**" location="/js/" />
     <mvc:resources mapping="/pagejs/**" location="/pagejs/" />
-     <mvc:resources mapping="/docs/**" location="/docs/" />
-      <mvc:resources mapping="/dist/**" location="/dist/" />
        <mvc:resources mapping="/fonts/**" location="/fonts/" />
-     <mvc:resources mapping="/portal/**" location="/portal/" />
+       <mvc:resources mapping="/css/**" location="/css/" />
+       <mvc:resources mapping="/assets/**" location="/assets/" />
 
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
 		<property name="exceptionMappings">  
@@ -47,7 +40,7 @@
 		</property>  
     </bean> 
     
-    <mvc:interceptors>
+    <!-- <mvc:interceptors>
     	<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<ref bean="responseHeadersIntercepter" />
@@ -62,9 +55,9 @@
 				<entry key="X-Content-Type-Options" value="nosniff" ></entry>
 				<entry key="X-XSS-Protection" value=" 1; mode=block" ></entry>
 				<entry key="Strict-Transport-Security" value="max-age=10886400; includeSubDomains" ></entry>
-<!-- 			<entry key="Access-Control-Allow-Origin" value="*"></entry> -->
+			<entry key="Access-Control-Allow-Origin" value="*"></entry>
 			</map>
 		</property>
-	</bean>
+	</bean> -->
 	<!-- end -->
 </beans>

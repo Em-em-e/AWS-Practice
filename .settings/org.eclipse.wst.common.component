@@ -3,7 +3,7 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <property name="context-root" value="gsk-echarts"/>
         <property name="java-output-path" value="/gsk-echarts/build/classes"/>
+        <property name="context-root" value="warehouse"/>
     </wb-module>
 </project-modules>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="warehouse.dao.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="warehouse.model.Customer" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="customer_type" property="customerType" jdbcType="VARCHAR" />
+    <result column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="remark3" property="remark3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_type, customer_no, customer_name, remark1, remark2, remark3
+  </sql>
+  <select id="queryPage" resultMap="BaseResultMap">  
+        select * from customer   
+        <where>  
+        	1=1
+            <if test="customer.id != null">  
+                and id=#{customer.id}
+            </if> 
+        </where>
+        <if test="limit != null">
+	        limit #{offset},#{limit} 
+        </if>  
+    </select> 
+  <select id="count" resultType="java.lang.Integer">
+    	select count(*) from customer
+    	<where>  
+        	1=1
+            <if test="customer.id != null">  
+                and id=#{customer.id}
+            </if> 
+        </where>
+    </select>
+  <select id="selectByNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select <include refid="Base_Column_List" /> from customer where customer_no=#{no}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer 
+    <where>
+    	1=1
+    	<if test="customerType != null">  
+            and  customer_type LIKE CONCAT('%', CONCAT(#{customerType}, '%'))
+        </if> 
+    </where>
+    
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from customer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="warehouse.model.Customer" >
+    insert into customer (id, customer_type, customer_no, 
+      customer_name, remark1, remark2, 
+      remark3)
+    values (#{id,jdbcType=INTEGER}, #{customerType,jdbcType=VARCHAR}, #{customerNo,jdbcType=VARCHAR}, 
+      #{customerName,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="warehouse.model.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerType != null" >
+        customer_type,
+      </if>
+      <if test="customerNo != null" >
+        customer_no,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="remark3 != null" >
+        remark3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customerType != null" >
+        #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null" >
+        #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="warehouse.model.Customer" >
+    update customer
+    <set >
+      <if test="customerType != null" >
+        customer_type = #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null" >
+        customer_no = #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        remark3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="warehouse.model.Customer" >
+    update customer
+    set customer_type = #{customerType,jdbcType=VARCHAR},
+      customer_no = #{customerNo,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      remark3 = #{remark3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

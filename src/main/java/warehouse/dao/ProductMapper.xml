@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="warehouse.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="warehouse.model.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_no" property="productNo" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="cube_or_quantity" property="cubeOrQuantity" jdbcType="INTEGER" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="remark3" property="remark3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_no, product_name, cube_or_quantity, location, remark1, remark2, remark3
+  </sql>
+  <select id="queryPage" resultMap="BaseResultMap">  
+        select * from product   
+        <where>  
+        	1=1
+            <if test="product.id != null">  
+                and id=#{product.id}
+            </if> 
+        </where>
+        <if test="limit != null">
+	        limit #{offset},#{limit} 
+        </if>  
+    </select> 
+  <select id="count" resultType="java.lang.Integer">
+    	select count(*) from product
+    	<where>  
+        	1=1
+            <if test="product.id != null">  
+                and id=#{product.id}
+            </if> 
+        </where>
+    </select>
+  <select id="selectByNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select <include refid="Base_Column_List" /> from product where product_no=#{no}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="warehouse.model.Product" >
+    insert into product (id, product_no, product_name, 
+      cube_or_quantity, location, remark1, 
+      remark2, remark3)
+    values (#{id,jdbcType=INTEGER}, #{productNo,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{cubeOrQuantity,jdbcType=INTEGER}, #{location,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="warehouse.model.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productNo != null" >
+        product_no,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="cubeOrQuantity != null" >
+        cube_or_quantity,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="remark3 != null" >
+        remark3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productNo != null" >
+        #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="cubeOrQuantity != null" >
+        #{cubeOrQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="warehouse.model.Product" >
+    update product
+    <set >
+      <if test="productNo != null" >
+        product_no = #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="cubeOrQuantity != null" >
+        cube_or_quantity = #{cubeOrQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        remark3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="warehouse.model.Product" >
+    update product
+    set product_no = #{productNo,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      cube_or_quantity = #{cubeOrQuantity,jdbcType=INTEGER},
+      location = #{location,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      remark3 = #{remark3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="warehouse.dao.InWarehouseMapper" >
+  <resultMap id="BaseResultMap" type="warehouse.model.InWarehouse" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="in_date" property="inDate" jdbcType="TIMESTAMP" />
+    <result column="in_number" property="inNumber" jdbcType="VARCHAR" />
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+    <result column="length" property="length" jdbcType="REAL" />
+    <result column="width" property="width" jdbcType="REAL" />
+    <result column="hight" property="hight" jdbcType="REAL" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="pucharse_price" property="pucharsePrice" jdbcType="REAL" />
+    <result column="pucharse_amount" property="pucharseAmount" jdbcType="REAL" />
+    <result column="cube" property="cube" jdbcType="REAL" />
+    <result column="transporter_name" property="transporterName" jdbcType="VARCHAR" />
+    <result column="trans_cube_price" property="transCubePrice" jdbcType="REAL" />
+    <result column="trans_amount" property="transAmount" jdbcType="REAL" />
+    <result column="trans_price" property="transPrice" jdbcType="REAL" />
+    <result column="pucharse_cost_price" property="pucharseCostPrice" jdbcType="REAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, in_date, in_number, supplier_name, length, width, hight, product_name, quantity, 
+    pucharse_price, pucharse_amount, cube, transporter_name, trans_cube_price, trans_amount, 
+    trans_price, pucharse_cost_price, remark, remark1, remark2
+  </sql>
+  <select id="superSelect" parameterType="String" resultType="java.util.LinkedHashMap"> 
+		${value} 
+	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from in_warehouse
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from in_warehouse
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="warehouse.model.InWarehouse" >
+    insert into in_warehouse (id, in_date, in_number, 
+      supplier_name, length, width, 
+      hight, product_name, quantity, 
+      pucharse_price, pucharse_amount, cube, 
+      transporter_name, trans_cube_price, trans_amount, 
+      trans_price, pucharse_cost_price, remark, 
+      remark1, remark2)
+    values (#{id,jdbcType=INTEGER}, #{inDate,jdbcType=TIMESTAMP}, #{inNumber,jdbcType=VARCHAR}, 
+      #{supplierName,jdbcType=VARCHAR}, #{length,jdbcType=REAL}, #{width,jdbcType=REAL}, 
+      #{hight,jdbcType=REAL}, #{productName,jdbcType=VARCHAR}, #{quantity,jdbcType=INTEGER}, 
+      #{pucharsePrice,jdbcType=REAL}, #{pucharseAmount,jdbcType=REAL}, #{cube,jdbcType=REAL}, 
+      #{transporterName,jdbcType=VARCHAR}, #{transCubePrice,jdbcType=REAL}, #{transAmount,jdbcType=REAL}, 
+      #{transPrice,jdbcType=REAL}, #{pucharseCostPrice,jdbcType=REAL}, #{remark,jdbcType=VARCHAR}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="warehouse.model.InWarehouse" >
+    insert into in_warehouse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="inDate != null" >
+        in_date,
+      </if>
+      <if test="inNumber != null" >
+        in_number,
+      </if>
+      <if test="supplierName != null" >
+        supplier_name,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="hight != null" >
+        hight,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="pucharsePrice != null" >
+        pucharse_price,
+      </if>
+      <if test="pucharseAmount != null" >
+        pucharse_amount,
+      </if>
+      <if test="cube != null" >
+        cube,
+      </if>
+      <if test="transporterName != null" >
+        transporter_name,
+      </if>
+      <if test="transCubePrice != null" >
+        trans_cube_price,
+      </if>
+      <if test="transAmount != null" >
+        trans_amount,
+      </if>
+      <if test="transPrice != null" >
+        trans_price,
+      </if>
+      <if test="pucharseCostPrice != null" >
+        pucharse_cost_price,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="inDate != null" >
+        #{inDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inNumber != null" >
+        #{inNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null" >
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=REAL},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=REAL},
+      </if>
+      <if test="hight != null" >
+        #{hight,jdbcType=REAL},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="pucharsePrice != null" >
+        #{pucharsePrice,jdbcType=REAL},
+      </if>
+      <if test="pucharseAmount != null" >
+        #{pucharseAmount,jdbcType=REAL},
+      </if>
+      <if test="cube != null" >
+        #{cube,jdbcType=REAL},
+      </if>
+      <if test="transporterName != null" >
+        #{transporterName,jdbcType=VARCHAR},
+      </if>
+      <if test="transCubePrice != null" >
+        #{transCubePrice,jdbcType=REAL},
+      </if>
+      <if test="transAmount != null" >
+        #{transAmount,jdbcType=REAL},
+      </if>
+      <if test="transPrice != null" >
+        #{transPrice,jdbcType=REAL},
+      </if>
+      <if test="pucharseCostPrice != null" >
+        #{pucharseCostPrice,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="warehouse.model.InWarehouse" >
+    update in_warehouse
+    <set >
+      <if test="inDate != null" >
+        in_date = #{inDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inNumber != null" >
+        in_number = #{inNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null" >
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=REAL},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=REAL},
+      </if>
+      <if test="hight != null" >
+        hight = #{hight,jdbcType=REAL},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="pucharsePrice != null" >
+        pucharse_price = #{pucharsePrice,jdbcType=REAL},
+      </if>
+      <if test="pucharseAmount != null" >
+        pucharse_amount = #{pucharseAmount,jdbcType=REAL},
+      </if>
+      <if test="cube != null" >
+        cube = #{cube,jdbcType=REAL},
+      </if>
+      <if test="transporterName != null" >
+        transporter_name = #{transporterName,jdbcType=VARCHAR},
+      </if>
+      <if test="transCubePrice != null" >
+        trans_cube_price = #{transCubePrice,jdbcType=REAL},
+      </if>
+      <if test="transAmount != null" >
+        trans_amount = #{transAmount,jdbcType=REAL},
+      </if>
+      <if test="transPrice != null" >
+        trans_price = #{transPrice,jdbcType=REAL},
+      </if>
+      <if test="pucharseCostPrice != null" >
+        pucharse_cost_price = #{pucharseCostPrice,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="warehouse.model.InWarehouse" >
+    update in_warehouse
+    set in_date = #{inDate,jdbcType=TIMESTAMP},
+      in_number = #{inNumber,jdbcType=VARCHAR},
+      supplier_name = #{supplierName,jdbcType=VARCHAR},
+      length = #{length,jdbcType=REAL},
+      width = #{width,jdbcType=REAL},
+      hight = #{hight,jdbcType=REAL},
+      product_name = #{productName,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=INTEGER},
+      pucharse_price = #{pucharsePrice,jdbcType=REAL},
+      pucharse_amount = #{pucharseAmount,jdbcType=REAL},
+      cube = #{cube,jdbcType=REAL},
+      transporter_name = #{transporterName,jdbcType=VARCHAR},
+      trans_cube_price = #{transCubePrice,jdbcType=REAL},
+      trans_amount = #{transAmount,jdbcType=REAL},
+      trans_price = #{transPrice,jdbcType=REAL},
+      pucharse_cost_price = #{pucharseCostPrice,jdbcType=REAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

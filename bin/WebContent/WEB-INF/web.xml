@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaeehttp://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0">
+  <display-name>Archetype Created Web Application</display-name>
+  <!-- Spring ApplicationContext配置文件的路径,可使用通配符，用于后面的Spring Context Loader -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath*:/applicationContext.xml
+		</param-value>
+	</context-param>
+	
+	<context-param>
+        <param-name>charset</param-name>
+        <param-value>UTF-8</param-value>
+    </context-param>
+	
+	<!-- 設定Spring Context的默认Profile -->
+	<context-param>
+    	<param-name>spring.profiles.default</param-name>
+    	<param-value>production</param-value>
+	</context-param>
+
+	<!--Spring ApplicationContext 载入 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<listener>
+        <listener-class>
+            org.springframework.web.context.request.RequestContextListener
+        </listener-class>
+    </listener>
+
+	<!-- Spring MVC Servlet -->
+	<servlet>
+		<servlet-name>springServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath*:/spring-mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+ <filter>
+       <filter-name>EncodingFilter</filter-name>
+       <filter-class>warehouse.util.EncodingFilter</filter-class>
+ </filter>
+
+ <filter-mapping>
+      <filter-name>EncodingFilter</filter-name>
+       <url-pattern>/*</url-pattern>
+ </filter-mapping>
+
+	<!-- session超时定义,单位为分钟 -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+</web-app>
